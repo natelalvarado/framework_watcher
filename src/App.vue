@@ -56,13 +56,7 @@ export default {
           datasets: [
             {
               label: "Stars",
-              data: [
-                parseInt(this.this.vueStats().stargazers_count),
-                1,
-                1,
-                3,
-                1,
-              ],
+              data: [1, 2, 3, 4, 5],
             },
             { label: "Watchers", data: [1, 2, 2, 1, 1] },
             { label: "Forks", data: [1, 2, 2, 1, 1] },
@@ -89,10 +83,16 @@ export default {
   },
   methods: {
     vueStats: function () {
-      axios.get("https://api.github.com/repos/vuejs/vue").then((response) => {
-        console.log(response.data);
-        this.vue_stats = response.data;
-      });
+      return axios
+        .get("https://api.github.com/repos/vuejs/vue")
+        .then((response) => {
+          console.log(response.data);
+          this.vue_stats = response.data;
+          this.config.data.datasets[0].data[0] = response.data.stargazers_count;
+          this.config.data.datasets[1].data[0] = response.data.watchers_count;
+          this.config.data.datasets[2].data[0] = response.data.forks;
+          return response.data;
+        });
     },
     angularStats: function () {
       axios
@@ -100,6 +100,11 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.angular_stats = response.data;
+          this.config.data.datasets[0].data[1] = [
+            response.data.stargazers_count,
+          ];
+          this.config.data.datasets[1].data[1] = [response.data.watchers_count];
+          this.config.data.datasets[2].data[1] = [response.data.forks];
         });
     },
     emberStats: function () {
@@ -108,6 +113,11 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.ember_stats = response.data;
+          this.config.data.datasets[0].data[2] = [
+            response.data.stargazers_count,
+          ];
+          this.config.data.datasets[1].data[2] = [response.data.watchers_count];
+          this.config.data.datasets[2].data[2] = [response.data.forks];
         });
     },
     svelteStats: function () {
@@ -116,6 +126,11 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.svelte_stats = response.data;
+          this.config.data.datasets[0].data[3] = [
+            response.data.stargazers_count,
+          ];
+          this.config.data.datasets[1].data[3] = [response.data.watchers_count];
+          this.config.data.datasets[2].data[3] = [response.data.forks];
         });
     },
     reactStats: function () {
@@ -124,6 +139,11 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.react_stats = response.data;
+          this.config.data.datasets[0].data[4] = [
+            response.data.stargazers_count,
+          ];
+          this.config.data.datasets[1].data[4] = [response.data.watchers_count];
+          this.config.data.datasets[2].data[4] = [response.data.forks];
         });
     },
   },
